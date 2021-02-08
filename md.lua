@@ -452,10 +452,14 @@ end
 
 local function renderLinesRaw(stream, options)
     local tree, links = readLineStream(stream)
+
     local accum = {}
     local head, tail, insertHead, insertTail, prependHead, appendTail = nil, nil, nil, nil, nil, nil
     if options then
         assert(type(options) == 'table', "Options argument should be a table.")
+        if options.emitTree then
+            return tree, links 
+        end
         if options.tag then
             tail = format('</%s>', options.tag)
             if options.attributes then
